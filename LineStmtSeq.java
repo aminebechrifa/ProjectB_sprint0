@@ -1,10 +1,15 @@
 import java.util.ArrayList;
 
 public class LineStmtSeq {
-ArrayList<LineStmt> seq ;
+ArrayList<LineStmt> lines ;
+public LineStmtSeq( ) {
+lines =new ArrayList<LineStmt>()  ;
+	System.out.print("adsc") ;
+}
 
 public void add(LineStmt parseLineStmt) {
-	seq.add(parseLineStmt) ;
+	
+	lines.add(parseLineStmt) ;
 	
 }
 }

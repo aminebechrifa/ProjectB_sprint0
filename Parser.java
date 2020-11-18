@@ -1,3 +1,4 @@
+
 /*
  * Parser_Skeleton.java - A parser gets tokens from the lexical analyser.
  *
@@ -5,7 +6,7 @@
  */
 
 
-public class Parser /*implements IParser */ {
+public class Parser implements IParser  {
     public Parser(Environment env) {
         this.lexer = env.getLexer();
         this.sourceFile = env.getSourceFile();
@@ -16,19 +17,11 @@ public class Parser /*implements IParser */ {
     }
     // Record the error: <t> expected, found <token> at <token>.position
     // eerrror stuff not for now 
-   protected void expect(String t) {
-        if (t != token) {
-            String expected = Lexer.getTokenName(t);
-            errorReporter.record( _Error.create( expected+" expected", Lexer.getPosition()) );
-        }
-        nextToken();
+
+    protected void expect(String t , String token  ) {
+        errorReporter.record("expected  "+t+"  but found  "+token+"   ", lexer.getPosition());
     }
-    protected void expect(String t) {
-        errorReporter.record( _Error.create(t+" expected", Lexer.getPosition()) );
-    }
-    protected void error(String t) {
-        errorReporter.record( _Error.create(t, Lexer.getPosition()) );
-    }
+
 
   //  private class SyntaxError extends Exception {}
 
@@ -44,14 +37,23 @@ public class Parser /*implements IParser */ {
 
         while ( !token.contentEquals( Lexer.EOF )	) {
             seq.add( parseLineStmt() );
-            address++ ;
+        	nextToken() ;
         }
         return new TranslationUnit(seq);
     }
     //---------------------------------------------------------------------------------
     private Instruction parseInherent() {
-	
-    	return null;
+	//check if existt in  table otherwise put error   
+    	if  (table.iherentinstruction.contains(token)) 
+    	
+    			return new Instruction(token);
+    	else { 
+    		// report error 
+    		expect("inherent instructions"  , token  )  ;
+    	
+    		
+    		return null ;
+    	}
         // your code...
     }
     //---------------------------------------------------------------------------------
@@ -79,21 +81,21 @@ public class Parser /*implements IParser */ {
 
         System.out.println("Parsing a Line Statement...");
 	inst=parseInherent();
-	
-nextToken() ;
+
    
 
         return new LineStmt(label, inst, comment);
     }
 
     protected void nextToken() {
+    	
         token = lexer.getToken();
-    }
+        System.out.print(token+"  ");    }
     private int           address;
     private String           token;
     private Lexer        lexer;
    private ISourceFile   sourceFile;
    private IReportable   errorReporter;
     private ISymbolTable  table;
-    private ISymbolTable  keywordTable;
+
 }

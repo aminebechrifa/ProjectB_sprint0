@@ -1,9 +1,10 @@
-
+import java.util.ArrayList;
 
 public interface ISymbolTable {
-String[] mnemonics= {"asdcca","asdcas"} ;
-String[] iherentinstruction= {"asdcca","asdcas"} ;
-String[] SymbolTable= {"asdcca","asdcas"} ;
+	
+static ArrayList<String> iherentinstruction= new ArrayList<String>() ;
+
+
 
 
 

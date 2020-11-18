@@ -11,14 +11,14 @@ public class Lexer   {
 	int curcolPos;
 	int ch;
 
-
-	public Lexer(Reader reader/*, ISymbolTable keywordTable*/) {
+ErrorReporter e ;
+	public Lexer(Reader reader , ErrorReporter er /*, ISymbolTable keywordTable*/) {
 		this.reader = reader;
 	//	this.keywordTable = keywordTable;
 		// your code...
 
 		// Enter all mnemonics as keywords in the symbol table...
-
+e=er ;
 		linePos = 1;
 		colPos = 0;
 		curlinePos = linePos;
@@ -52,7 +52,7 @@ public class Lexer   {
 	private String scanIdentifier() {
 
 		String ide = "";
-		while ((ch != (int)' ') &&(ch != (int)';')&& (ch != (int)'\n')  && (ch != (int)'.') && (ch != (int)'\r') && (ch != -1) ) {
+		while ((ch != (int)' ') &&(ch != (int)';')&& (ch != (int)'\n')   && (ch != (int)'\r') && (ch != -1) ) {
 	
 			ide = ide +(char) ch;
 			read();
@@ -101,10 +101,10 @@ public class Lexer   {
 	}
 
 	private void error(String t) {
-//		errorReporter.record(_Error.create(t, getPosition()));
+		e.record( 	"token expected  but found "+t, getPosition() );
 	}
-public int getPosition() { 
-	return curlinePos ;
+public Position getPosition() { 
+	return new Position(curlinePos,curcolPos) ;
 }
 	/**
 	 * Scan the next token. Mark position on entry in case of error.
@@ -120,17 +120,26 @@ public int getPosition() {
 		
 			if (ch == (int)' ') 
 				read();
-			else if ((ch ==(int) '\n')||(ch ==(int) '\r')) {
+			else if ((ch ==(int) '\n')) {
+		
+				
+				read(); 
 				linePos++;
 				colPos=0  ; 
-				read(); 
+				curcolPos=0 ;
 			}
+			else if ((ch ==(int) '\r')) { 
+				read();
+			
+				colPos=0  ; 
+				curcolPos=0 ;}
+			
 			else test=false ;
 		}
 		// Mark position (after skipping blanks)
-		curlinePos = linePos;
+			
 		curcolPos = colPos;
-
+		curlinePos=linePos ;
 		while (true) {
 	
 			switch (ch) {
@@ -220,9 +229,9 @@ public int getPosition() {
 				return scanString();
 
 			default:
-				read();
-
-				return ILLEGAL_CHAR;
+				error(scanIdentifier()  ) ;
+		
+				return getToken();
 			}
 		}
 	}

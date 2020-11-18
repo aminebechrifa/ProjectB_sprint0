@@ -7,11 +7,12 @@ public class Environment {
 	
 	
 	
-	public Environment(Lexer lexer, ISourceFile sourceFile, ISymbolTable keywordtable) {
+	public Environment(Lexer lexer, ISourceFile sourceFile, ISymbolTable keywordtable, IReportable ER) {
 		super();
 		this.lexer = lexer;
 		SourceFile = sourceFile;
 		this.keywordtable = keywordtable;
+		errorReporter=ER ;
 	}
 	public Lexer getLexer() {
 	
