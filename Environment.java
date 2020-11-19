@@ -2,12 +2,12 @@
 public class Environment {
 	Lexer  lexer ;
 	ISourceFile  SourceFile ;
-	ISymbolTable keywordtable ;
+	SymTable keywordtable ;
 	IReportable errorReporter ;
 	
 	
 	
-	public Environment(Lexer lexer, ISourceFile sourceFile, ISymbolTable keywordtable, IReportable ER) {
+	public Environment(Lexer lexer, ISourceFile sourceFile, SymTable keywordtable, IReportable ER) {
 		super();
 		this.lexer = lexer;
 		SourceFile = sourceFile;
@@ -22,7 +22,7 @@ public class Environment {
 	
 	
 	
-	public ISymbolTable getSymbolTable() {
+	public SymTable getSymbolTable() {
 	
 		return keywordtable;
 	}

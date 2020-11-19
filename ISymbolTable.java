@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 public interface ISymbolTable {
 	
-static ArrayList<String> iherentinstruction= new ArrayList<String>() ;
-
-
-
-
+	public String getToken(String key) ;
+	public String getBin(String key);
+	public String getHex(String key) ;
+	
+	public boolean containsInherent(String key) ;
 
 
 

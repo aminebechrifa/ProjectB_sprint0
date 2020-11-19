@@ -12,7 +12,7 @@ public class Parser implements IParser  {
         this.sourceFile = env.getSourceFile();
        this.errorReporter = env.getErrorReporter();
         this.table = env.getSymbolTable();
-        nextToken(); // prime
+         // prime
         address = 0;
     }
     // Record the error: <t> expected, found <token> at <token>.position
@@ -31,8 +31,11 @@ public class Parser implements IParser  {
     // AssemblyUnit = { LineStmt } EOF .
     // -------------------------------------------------------------------
     public Link parse() {
+    	if (Verbose.verbose)
         System.out.println("Parsing a AssemblyUnit...");
-
+    	if (Verbose.verbose)
+            System.out.println("Parsing a Line Statement...");
+    	nextToken();
         LineStmtSeq seq = new LineStmtSeq();
 
         while ( !token.contentEquals( Lexer.EOF )	) {
@@ -44,7 +47,7 @@ public class Parser implements IParser  {
     //---------------------------------------------------------------------------------
     private Instruction parseInherent() {
 	//check if existt in  table otherwise put error   
-    	if  (table.iherentinstruction.contains(token)) 
+    	if  (table.containsInherent(token)) 
     	
     			return new Instruction(token);
     	else { 
@@ -78,7 +81,7 @@ public class Parser implements IParser  {
         Label        label = null;
         Instruction  inst = null;
         Comment      comment = null;
-
+if (Verbose.verbose)
         System.out.println("Parsing a Line Statement...");
 	inst=parseInherent();
 
@@ -90,12 +93,15 @@ public class Parser implements IParser  {
     protected void nextToken() {
     	
         token = lexer.getToken();
-        System.out.print(token+"  ");    }
+    if (Verbose.verbose)   
+    	System.out.print("token found : "+token+ "  \n") ;
+    
+    }
     private int           address;
     private String           token;
     private Lexer        lexer;
    private ISourceFile   sourceFile;
    private IReportable   errorReporter;
-    private ISymbolTable  table;
+    private SymTable  table;
 
 }
