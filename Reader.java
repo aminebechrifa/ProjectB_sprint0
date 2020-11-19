@@ -6,6 +6,7 @@ public class Reader {
 	
 	
 	FileInputStream inputStream ; 
+	// read the file 
 	public Reader(	String  file  ) {
 		try {
 			FileInputStream input = new FileInputStream(file);
@@ -29,10 +30,11 @@ public class Reader {
                 return c ;
        
         } catch (IOException e) {
-            System.out.println("Computer.init(): IOException - abort wcOO");
+        	// error message 
+            System.out.println("Computer.init(): IOException - abort");
             System.exit(1);
             return -2 ;
-            // DO ERROR STUFF
+          
         }
         return EOF ;
     }

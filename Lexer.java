@@ -1,4 +1,4 @@
-
+// class lexer
 public class Lexer   {
 
 	static final String EOF ="E O F";
@@ -15,7 +15,6 @@ ErrorReporter e ;
 	public Lexer(Reader reader , ErrorReporter er /*, ISymbolTable keywordTable*/) {
 		this.reader = reader;
 	//	this.keywordTable = keywordTable;
-		// your code...
 
 		// Enter all mnemonics as keywords in the symbol table...
 e=er ;

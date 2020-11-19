@@ -1,5 +1,7 @@
-
-public class LineStmt {
+// class lineStmt 
+public class LineStmt  extends node {
+	// each line statemetn can optionally be a label, an instruction, a comment ..
+// assuming instruction or directive are going to be stored in inst ;
 	 Label        label = null;
      Instruction  inst = null;
      Comment      comment = null;

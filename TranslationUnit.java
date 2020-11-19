@@ -2,7 +2,7 @@
 
 public class TranslationUnit extends Link {
 
-	// we need to translate here the final thing not for this sprint i think 
+	// translation to binary , to be done next sprint
 
 	TranslationUnit(LineStmtSeq seq) { 
 		fullfile=seq ;

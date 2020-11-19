@@ -1,9 +1,8 @@
 
-/*
- * Parser_Skeleton.java - A parser gets tokens from the lexical analyser.
- *
- * @author  Michel de Champlain
- */
+//  Class parser gets tokens from the lexical analyser
+// @ Dr Michel de Champlin 
+// Modified by Team 
+
 
 
 public class Parser implements IParser  {
