@@ -20,7 +20,9 @@ public class Parser implements IParser  {
     protected void expect(String t , String token  ) {
         errorReporter.record("expected  "+t+"  but found  "+token+"   ", lexer.getPosition());
     }
-
+    protected void unexpected(String token  ) {
+        errorReporter.record("unexpected token found  :  "+token, lexer.getPosition());
+    }
 
   //  private class SyntaxError extends Exception {}
 
@@ -47,24 +49,71 @@ public class Parser implements IParser  {
     private Instruction parseInherent() {
 	//check if existt in  table otherwise put error   
     	if  (table.containsInherent(token)) 
-    	
-    			return new Instruction(token);
+    	{String mnemonic=token ; 
+    	nextToken() ;
+    			return new InherentInstruction	(mnemonic);}
     	else { 
     		// report error 
     		expect("inherent instructions"  , token  )  ;
     	
-    		
+    		SkipLine() ;
     		return null ;
     	}
         // your code...
     }
     //---------------------------------------------------------------------------------
     private Instruction parseImmediate() {
-		return null;
+    	String mnemonic=token.substring(0,token.indexOf('.')) ; 
+    	String range=token.substring(token.indexOf('.'),token.length()) ;
+    	nextToken() ;
+    	String operand=token ;
+
+    		
+    	if  (!table.containsImmediate(token)) 
+    		{ expect("Immediate instructions"  , token  )  ;
+    		SkipLine() ;
+    		return null ; 
+    		}
+    	ImediateInstruction I=new ImediateInstruction(mnemonic,range , operand) ;
+    	if  (I.operandissue()) 
+		{ expect("operand ", token  ) ;
+    		SkipLine() ;
+		return null ; 
+		}	
+    	if  (I.rangeIssue( table.getlower(range),  table.getupper(range))) 
+    		
+		{  String err="operand in reange  ["+ table.getlower(range)+ " , "+ table.getupper(range)+" ]  ";
+    		expect(err, token  ) ;
+    		SkipLine() ;
+		return null ; 
+		}	
+    		
+    		
+    	nextToken() ;	
+    		
+    	return  I ;
+    	
+    	
+
+        // your code...
+    }
+    private Label parselabel() {
+    	if  (!table.containsInherent(token) &&   !(table.containsImmediate(token)) ) { 
+    	String label=token ; 
+    	nextToken() ;
+		return new Label(label);}
+    	else { 
+    		SkipLine() ; 
+    		return null ;
+    	}
         // your code...
     }
     //---------------------------------------------------------------------------------
     private Instruction parseRelative() {
+		return null;
+        // your code...
+    }
+    private Instruction parsedirective() {
 		return null;
         // your code...
     }
@@ -82,12 +131,43 @@ public class Parser implements IParser  {
         Comment      comment = null;
 if (Verbose.verbose)
         System.out.println("Parsing a Line Statement...");
-	inst=parseInherent();
+
+
+	while (token !="EOL") { 
+		if (token.charAt(0)==';') {
+			comment=new Comment(token ) ; nextToken() ; }
+		else if (lexer.getPosition().colpos==0) { 
+		label=parselabel() ;
+	}
+	
+	else if ( (token.charAt(0)=='.')&& !(lexer.getPosition().colpos==0)) {
+		inst=parsedirective() ; 
+	}
+		
+	else if ( !(lexer.getPosition().colpos==0)&& !(token.contains(".")) ) {
+		inst=parseInherent() ; 
+	}
+	else if ( (token.contains(".") )&& !(lexer.getPosition().colpos==0) ) {
+		inst=parseImmediate() ;
+	}
+	else { unexpected( token  ) ;SkipLine() ; }
+		
+	
+		}
+
 
    
 
         return new LineStmt(label, inst, comment);
     }
+
+	protected void SkipLine() { 
+		while (token !="EOL") { 
+			nextToken() ;
+		}
+		
+		
+	}
 
     protected void nextToken() {
     	

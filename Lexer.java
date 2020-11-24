@@ -35,16 +35,22 @@ e=er ;
 
 	private String scanNumber() {
 		String number = "" ;
+		
 		boolean isdig=true ;
 		while ((ch != (int)' ') && (ch != (int)'\n') && (ch != (int)'\r') && (ch != (int)';')  && (ch != -1)&& isdig) {
 
 	
-			// if ch is not digit we got a problem
+			if (!Character.isDigit(ch)) {
+				isdig=false ;
+			}
 			number = number +(char) ch;
 			read();
 
 				
 		}
+		if (isdig)
+			{error(number)  ; 
+			return getToken() ;}
 		return number;
 	}
 
@@ -119,14 +125,7 @@ public Position getPosition() {
 		
 			if (ch == (int)' ') 
 				read();
-			else if ((ch ==(int) '\n')) {
 		
-				
-				read(); 
-				linePos++;
-				colPos=0  ; 
-				curcolPos=0 ;
-			}
 			else if ((ch ==(int) '\r')) { 
 				read();
 			
@@ -140,12 +139,22 @@ public Position getPosition() {
 		curcolPos = colPos;
 		curlinePos=linePos ;
 		while (true) {
+		
+			
 	
 			switch (ch) {
 			case -1:
 				return EOF;
-
+			case ((int)'\n'):
+				{	
+				read(); 
+				linePos++;
+				colPos=0  ; 
+				curcolPos=0 ;
+				return "EOL" ; 
+			}
 			case (int)'a':
+				
 			case (int)'b':
 			case (int)'c':
 			case (int)'d':

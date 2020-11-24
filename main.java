@@ -37,7 +37,7 @@ System.out.print(adm.filename);
 
 		Reader red = new Reader("tnt");
 		Lexer lex = new Lexer(red, e);
-		Output output = new Output("outpuuut", "txt");
+		Output output = new Output("output", "txt");
 
 		ISourceFile s = new ISourceFile("tnt", "");
 		SymTable keywordtable = new SymTable();

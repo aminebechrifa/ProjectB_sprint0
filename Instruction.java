@@ -1,9 +1,11 @@
 
-public class Instruction {
-String instruction ;
+public abstract class Instruction {
+String mnemonic ;
+
 public Instruction(String str) { 
-	instruction=str ;
+	mnemonic=str ;
 }
+
 
 
 
