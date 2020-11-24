@@ -41,12 +41,28 @@ public class Parser implements IParser  {
 
         while ( !token.contentEquals( Lexer.EOF )	) {
         	if ( !token.contentEquals( "EOL" ) )
-            seq.add( parseLineStmt() );
+        	{ seq.add( parseLineStmt() );
+        	address++ ;
+        	}
         	nextToken() ;
         }
+        setoff(seq) ;
+        Label.print();
         return new TranslationUnit(seq);
     }
-    //---------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------
+    private void setoff( LineStmtSeq seq) { 
+    	int i=0 ;
+    	for (int j : Label.isoperand ) { 
+    	
+    		if (j==1) { 
+    			int off=Label.getoff(i) ;
+    		seq.settoff(Label.poexisting.get(i), off);
+    		}  
+    	
+    		i++ ; 
+    	}
+    }
     private Instruction parseInherent() {
 	//check if existt in  table otherwise put error   
     	if  (table.containsInherent(token)) 
@@ -81,7 +97,7 @@ public class Parser implements IParser  {
     		SkipLine() ;
 		return null ; 
 		}	
-    	if  (I.rangeIssue( table.getlower(range),  table.getupper(range))) 
+    	if  (I.rangeIssue( table.getlower(range),  table.getupper(range),address)) 
     		
 		{  String err="operand in reange  ["+ table.getlower(range)+ " , "+ table.getupper(range)+" ]  ";
     		expect(err, token  ) ;
@@ -101,9 +117,9 @@ public class Parser implements IParser  {
     private Label parselabel() {
     	if  (!table.containsInherent(token) &&   !false/*(table.containsImmediate(token))*/ ) { 
     	String label=token ; 
-    	System.out.println(label+"gakdhlsvjchdgcsvjkjakh") ;
+
     	nextToken() ;
-		return new Label(label);}
+		return new Label(label,address);}
     	else { 
     		SkipLine() ; 
     		return null ;
@@ -128,7 +144,7 @@ public class Parser implements IParser  {
     // LineStatement = [Label] [Instruction | Directive ] [Comment] EOL .
     //
     public LineStmt parseLineStmt() {
-        Label        label = new Label(null) ;
+        Label        label = new Label() ;
         Instruction  inst = new InherentInstruction(null);
         Comment      comment = new Comment(null);
 if (Verbose.verbose)
@@ -159,7 +175,7 @@ if (Verbose.verbose)
 		}
 
 if (label==null)
-	label = new Label(null) ;
+	label = new Label() ;
 if (inst==null)
       inst = new InherentInstruction(null);
 if (comment==null)

@@ -5,7 +5,8 @@ public class LineStmt  extends node {
 	 Label        label = null;
      Instruction  inst = null;
      Comment      comment = null;
-     int 	adress ;
+     int 	offset ;
+     
 	public LineStmt(Label label, Instruction inst, Comment comment) {
 		super();
 		this.label = label;
@@ -14,9 +15,11 @@ public class LineStmt  extends node {
 	}
 
 public String tostring() { 
-	return  label.tostring() +' '+inst.tostring()+' '+comment.tostring();
+	return  label.tostring() +' '+inst.tostring()+' '+comment.tostring()+"       "+offset;
 }
 
-
+public  void setoffset(int off) { 
+	offset=off ;
+}
 
 }

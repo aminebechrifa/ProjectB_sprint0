@@ -13,4 +13,12 @@ public void add(LineStmt parseLineStmt) {
 	lines.add(parseLineStmt) ;
 	
 }
+
+public void settoff(int i , int off ) {
+	
+	lines.get(i).setoffset(off); ;
+	
+}
+
+
 }

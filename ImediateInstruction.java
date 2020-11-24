@@ -20,7 +20,7 @@ public String getoperand() {
 	return operand  ;
 }
 
-public boolean rangeIssue(int l , int u ) { 
+public boolean rangeIssue(int l , int u ,int add) { 
 	boolean test= false ;
 try { 
 
@@ -28,6 +28,7 @@ try {
 			&& (u>= Integer.parseInt(operand)  )) ;
 }
 catch (Exception e){ 
+	Label label=new Label(operand ,add,1 ) ;
 	test= ( (u>= operand.length()  ) && ( l <= operand.length()) )  ;
 }
 return !test ;

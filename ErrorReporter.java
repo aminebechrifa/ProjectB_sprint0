@@ -2,8 +2,8 @@ import java.util.ArrayList;
 // error reporter class to report the potential errors in the file we read 
 
 public class ErrorReporter implements IReportable {
-	ArrayList<String> _ERROR ;// errors will be recorded in an arrayList 
-	boolean errors=false ;  // there is an error or not 
+	static ArrayList<String> _ERROR ;// errors will be recorded in an arrayList 
+	static boolean errors=false ;  // there is an error or not 
 	
 	public ErrorReporter() { 
 	_ERROR=new ArrayList<String>() ;
@@ -24,5 +24,9 @@ public class ErrorReporter implements IReportable {
 		}
 		return str ;
 	}
-
+public static void labelerror(String str, int pos) {
+		errors=true ;
+		_ERROR.add("no corresponding declaration to the label : "+ str +" : L  "+ pos ) ;
+		
+	}
 }
