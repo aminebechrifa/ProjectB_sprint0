@@ -40,6 +40,7 @@ public class Parser implements IParser  {
         LineStmtSeq seq = new LineStmtSeq();
 
         while ( !token.contentEquals( Lexer.EOF )	) {
+        	if ( !token.contentEquals( "EOL" ) )
             seq.add( parseLineStmt() );
         	nextToken() ;
         }
@@ -98,8 +99,9 @@ public class Parser implements IParser  {
         // your code...
     }
     private Label parselabel() {
-    	if  (!table.containsInherent(token) &&   !(table.containsImmediate(token)) ) { 
+    	if  (!table.containsInherent(token) &&   !false/*(table.containsImmediate(token))*/ ) { 
     	String label=token ; 
+    	System.out.println(label+"gakdhlsvjchdgcsvjkjakh") ;
     	nextToken() ;
 		return new Label(label);}
     	else { 
@@ -126,9 +128,9 @@ public class Parser implements IParser  {
     // LineStatement = [Label] [Instruction | Directive ] [Comment] EOL .
     //
     public LineStmt parseLineStmt() {
-        Label        label = null;
-        Instruction  inst = null;
-        Comment      comment = null;
+        Label        label = new Label(null) ;
+        Instruction  inst = new InherentInstruction(null);
+        Comment      comment = new Comment(null);
 if (Verbose.verbose)
         System.out.println("Parsing a Line Statement...");
 
@@ -138,6 +140,7 @@ if (Verbose.verbose)
 			comment=new Comment(token ) ; nextToken() ; }
 		else if (lexer.getPosition().colpos==0) { 
 		label=parselabel() ;
+		System.out.println("gakdhlsvjchdgcsvjkjakh") ;
 	}
 	
 	else if ( (token.charAt(0)=='.')&& !(lexer.getPosition().colpos==0)) {
@@ -155,8 +158,12 @@ if (Verbose.verbose)
 	
 		}
 
-
-   
+if (label==null)
+	label = new Label(null) ;
+if (inst==null)
+      inst = new InherentInstruction(null);
+if (comment==null)
+      comment = new Comment(null);
 
         return new LineStmt(label, inst, comment);
     }
@@ -174,6 +181,7 @@ if (Verbose.verbose)
         token = lexer.getToken();
     if (Verbose.verbose)   
     	System.out.print("token found : "+token+ "  \n") ;
+    System.out.println(token+"  "+lexer.getPosition().colpos);
     
     }
     private int           address;

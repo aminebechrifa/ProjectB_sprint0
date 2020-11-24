@@ -13,7 +13,9 @@ public class LineStmt  extends node {
 		this.comment = comment;
 	}
 
-
+public String tostring() { 
+	return  label.tostring() +' '+inst.tostring()+' '+comment.tostring();
+}
 
 
 

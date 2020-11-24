@@ -9,4 +9,9 @@ public class InherentInstruction extends Instruction {
 		return mnemonic ;
 	}
 
+@Override
+public String tostring() {
+	// TODO Auto-generated method stub
+	return mnemonic ;
+}
 }

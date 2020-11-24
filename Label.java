@@ -9,4 +9,8 @@ public Label(String str) {
 	existing.add(str ) ;
 	label=str ;
 }
+public String tostring() { 
+	
+	return label ;
+}
 }

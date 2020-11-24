@@ -4,4 +4,7 @@ String comment ; // to store the comment
 Comment(String com){ 
 	comment=com ;
 }
+public String tostring() { 
+	return comment ;
+}
 }

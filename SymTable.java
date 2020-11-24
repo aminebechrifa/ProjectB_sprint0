@@ -136,17 +136,21 @@ public class SymTable {
 	}
 	
 	public boolean containsInherent(String key) {
+		
 		return inherent.containsKey(key);
 	}
 	public boolean containsImmediate(String key) {
-		return immediate.containsKey(key);
+		return true ;
+		//return immediate.containsKey(key);
 	}
 	public int getupper(String key) { 
-		return upper.get(key);
+		return 100 ;
+		//return upper.get(key);
 	}
 	
 	public int getlower(String key) { 
-		return lower.get(key) ; 
+		return -100 ;
+		//return lower.get(key) ; 
 	}
 /* Some sample code to test this class in main
  * SymTable ST = new SymTable();

@@ -7,7 +7,7 @@ String operand ;
 
 public ImediateInstruction(String str,String rang , String operan) {
 	super(str);
-	range=range ; 
+	range=rang ; 
 	operand=operan ;
 	
 	// TODO Auto-generated constructor stub
@@ -23,14 +23,14 @@ public String getoperand() {
 public boolean rangeIssue(int l , int u ) { 
 	boolean test= false ;
 try { 
+
 	 test=(l <= Integer.parseInt(operand)
 			&& (u>= Integer.parseInt(operand)  )) ;
 }
 catch (Exception e){ 
-	test= ( ( l <= operand.length())
-			&& (u>= operand.length()  ) )  ;
+	test= ( (u>= operand.length()  ) && ( l <= operand.length()) )  ;
 }
-return test ;
+return !test ;
 } 
 
 
@@ -41,5 +41,8 @@ if ( (operand.charAt(0)==';')||(operand.charAt(0)=='.'))
 	return true ;
 else return false ;
 }
-
+public String tostring() {
+	// TODO Auto-generated method stub
+	return mnemonic+ ' '+range +' '+ operand ;
+}
 }

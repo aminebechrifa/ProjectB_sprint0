@@ -29,7 +29,7 @@ e=er ;
 
 	/* Read the next character. */
 	private int read() {
-		colPos++;
+
 		return ch = reader.read();
 	}
 
@@ -39,7 +39,7 @@ e=er ;
 		boolean isdig=true ;
 		while ((ch != (int)' ') && (ch != (int)'\n') && (ch != (int)'\r') && (ch != (int)';')  && (ch != -1)&& isdig) {
 
-	
+
 			if (!Character.isDigit(ch)) {
 				isdig=false ;
 			}
@@ -48,9 +48,10 @@ e=er ;
 
 				
 		}
-		if (isdig)
+		if (!isdig)
 			{error(number)  ; 
 			return getToken() ;}
+		colPos++ ;
 		return number;
 	}
 
@@ -63,7 +64,7 @@ e=er ;
 			read();
 	
 		}
-
+		colPos++ ;
 		return ide;
 	}
 
@@ -77,6 +78,7 @@ e=er ;
 			read();
 
 		}
+		colPos++ ;
 		return dir;
 	}
 
@@ -88,6 +90,7 @@ e=er ;
 			str = str +(char) ch;
 			read();
 		}
+		colPos++ ;
 		return str;
 	}
 	
@@ -102,11 +105,12 @@ e=er ;
 			read();
 
 		}
+		colPos++ ;
 		return str;
 	}
 
 	private void error(String t) {
-		e.record( 	"token expected  but found "+t, getPosition() );
+		e.record( 	"token expected  but fou	nd "+t, getPosition() );
 	}
 public Position getPosition() { 
 	return new Position(curlinePos,curcolPos) ;
@@ -117,6 +121,8 @@ public Position getPosition() {
 	 * @return the token.
 	 */
 	public String getToken() {
+		if (ch == (int)' ') 
+			{ read();colPos++ ;}
 		// skip whitespaces
 		// "\n", "\r\n", "\n", or line comments are considered as EOL
 		
