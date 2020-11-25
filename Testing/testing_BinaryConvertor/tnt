@@ -1,0 +1,4 @@
+
+ ldc.i3 3
+ dup
+ stv.u3 0 
