@@ -47,7 +47,7 @@ public class Parser implements IParser  {
         	nextToken() ;
         }
         setoff(seq) ;
-        Label.print();
+ 
         return new TranslationUnit(seq);
     }
     //-----------------------------------------------------------------------
@@ -86,8 +86,8 @@ public class Parser implements IParser  {
     	String operand=token ;
 
     		
-    	if  (!table.containsImmediate(token)) 
-    		{ expect("Immediate instructions"  , token  )  ;
+    	if  (!table.containsImmediate(mnemonic)) 
+    		{ expect("Immediate instructions"  , mnemonic  )  ;
     		SkipLine() ;
     		return null ; 
     		}
@@ -156,7 +156,7 @@ if (Verbose.verbose)
 			comment=new Comment(token ) ; nextToken() ; }
 		else if (lexer.getPosition().colpos==0) { 
 		label=parselabel() ;
-		System.out.println("gakdhlsvjchdgcsvjkjakh") ;
+		
 	}
 	
 	else if ( (token.charAt(0)=='.')&& !(lexer.getPosition().colpos==0)) {
@@ -197,7 +197,7 @@ if (comment==null)
         token = lexer.getToken();
     if (Verbose.verbose)   
     	System.out.print("token found : "+token+ "  \n") ;
-    System.out.println(token+"  "+lexer.getPosition().colpos);
+ 
     
     }
     private int           address;

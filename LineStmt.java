@@ -21,5 +21,32 @@ public String tostring() {
 public  void setoffset(int off) { 
 	offset=off ;
 }
+public boolean writable() { 
+	return (!(label.label==null)&& !(inst.mnemonic==null)) ;
+}
+public boolean biwritable() { 
+	return ( !(inst.mnemonic==null)) ;
+}
+
+
+public String getcomment() { 
+	return comment.tostring() ;
+}
+public String getmnemonic() { 
+	return inst.mnemonic ;
+}
+public String getoperand() { 
+	return inst.operand ;
+}
+
+
+public String getlabel() { 
+	return label.label ;
+}
+public String getoffset() { 
+	return String.valueOf(offset) ;
+}
+
+
 
 }

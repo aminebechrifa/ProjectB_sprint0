@@ -2,8 +2,7 @@
 public class ImediateInstruction extends InherentInstruction {
 
 
-String range ; 
-String operand ; 
+
 
 public ImediateInstruction(String str,String rang , String operan) {
 	super(str);
@@ -20,7 +19,7 @@ public String getoperand() {
 	return operand  ;
 }
 
-public boolean rangeIssue(int l , int u ,int add) { 
+public boolean rangeIssue(double l , double u ,int add) { 
 	boolean test= false ;
 try { 
 
@@ -46,4 +45,7 @@ public String tostring() {
 	// TODO Auto-generated method stub
 	return mnemonic+ ' '+range +' '+ operand ;
 }
+
+
+
 }

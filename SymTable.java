@@ -7,8 +7,9 @@ public class SymTable {
 	Map<String, String> BinTable = new HashMap<String,String>();
 	Map<String, String> HexTable = new HashMap<String,String>();
 	
-	Map<String, Integer> lower = new HashMap<String,Integer>();
-	Map<String, Integer> upper = new HashMap<String,Integer>();
+	Map<String, Double> lower = new HashMap<String,Double>();
+	Map<String, Double> upper = new HashMap<String,Double>();
+	
 
 	public SymTable() {
 		//All key-token pairs
@@ -38,33 +39,44 @@ public class SymTable {
 		inherent.put("tle","mnemonic");
 		inherent.put("tge","mnemonic");
 		inherent.put("halt","mnemonic");
+		
 		//all key token immediate 
-		immediate.put("halt","mnemonic");
-		immediate.put("pop","mnemonic");
-		immediate.put("dup","mnemonic");
-		immediate.put("exit","mnemonic");
-		immediate.put("ret","mnemonic");
-		immediate.put("not","mnemonic");
-		immediate.put("and","mnemonic");
-		immediate.put("or","mnemonic");
-		immediate.put("xor","mnemonic");
-		immediate.put("neg","mnemonic");
-		immediate.put("inc","mnemonic");
-		immediate.put("dec","mnemonic");
 		immediate.put("add","mnemonic");
-		immediate.put("sub","mnemonic");
-		immediate.put("mul","mnemonic");
+		immediate.put("addv","mnemonic");
+		immediate.put("and","mnemonic");
+		immediate.put("br","mnemonic");
+		immediate.put("brf","mnemonic");
+		immediate.put("call","mnemonic");
+		immediate.put("dec","mnemonic");
+		immediate.put("decv","mnemonic");
 		immediate.put("div","mnemonic");
+		immediate.put("dup","mnemonic");
+		immediate.put("enter","mnemonic");
+		immediate.put("halt","mnemonic");
+		immediate.put("inc","mnemonic");
+		immediate.put("incv","mnemonic");
+		immediate.put("ldc","mnemonic");
+		immediate.put("ldv","mnemonic");
+		immediate.put("mul","mnemonic");
+		immediate.put("neg","mnemonic");
+		immediate.put("not","mnemonic");
+		immediate.put("or","mnemonic");
+		immediate.put("pop","mnemonic");
 		immediate.put("rem","mnemonic");
+		immediate.put("ret","mnemonic");
 		immediate.put("shl","mnemonic");
 		immediate.put("shr","mnemonic");
+		immediate.put("sub","mnemonic");
+		immediate.put("stv","mnemonic");
 		immediate.put("teq","mnemonic");
-		immediate.put("tne","mnemonic");
-		immediate.put("tlt","mnemonic");
-		immediate.put("tgt","mnemonic");
-		immediate.put("tle","mnemonic");
 		immediate.put("tge","mnemonic");
-		immediate.put("halt","mnemonic");
+		immediate.put("tgt","mnemonic");
+		immediate.put("tlr","mnemonic");
+		immediate.put("tlt","mnemonic");
+		immediate.put("tne","mnemonic");
+		immediate.put("trap","mnemonic");
+		immediate.put("xor","mnemonic");
+		
 	    //All key-Binary pairs
 		BinTable.put("halt","000 00000");
 		BinTable.put("pop","000 00001");
@@ -118,8 +130,45 @@ public class SymTable {
 		HexTable.put("tgt","1D");
 		HexTable.put("tle","1E");
 		HexTable.put("tge","1F");
+		HexTable.put("br","30");
+		HexTable.put("brf","50");
+		HexTable.put("enter","70");
+		HexTable.put("ldc","90");
+		HexTable.put("addv","98");
+		HexTable.put("ldv","A0");
+		HexTable.put("stv","A8");
+
+		//all lower bounds of fields
+		lower.put(".u3",0.0);
+		lower.put(".i3",-4.0);
+		lower.put(".u4",0.0);
+		lower.put(".i4",-8.0);
+		lower.put(".u5",0.0);
+		lower.put(".i5",-16.0);
+		lower.put(".u8",0.0);
+		lower.put(".i8",-128.0);
+		lower.put(".u16",0.0);
+		lower.put(".i16",-32768.0);
+		lower.put(".u32",0.0);
+		lower.put(".i32",-2147483648.0);
 		
+		//all upper bounds of fields
+		upper.put(".u3",7.0);
+		upper.put(".i3",3.0);
+		upper.put(".u4",15.0);
+		upper.put(".i4",7.0);
+		upper.put(".u5",31.0);
+		upper.put(".i5",15.0);
+		upper.put(".u8",255.0);
+		upper.put(".i8",127.0);
+		upper.put(".u16",65535.0);
+		upper.put(".i16",32767.0);
+		upper.put(".u32",4294967295.0);
+		upper.put(".i32",2147483647.0);
 	}
+	
+	
+	
 
 	public String getToken(String key) {
 		if ( containsInherent( key))
@@ -140,17 +189,14 @@ public class SymTable {
 		return inherent.containsKey(key);
 	}
 	public boolean containsImmediate(String key) {
-		return true ;
-		//return immediate.containsKey(key);
+		return immediate.containsKey(key);
 	}
-	public int getupper(String key) { 
-		return 100 ;
-		//return upper.get(key);
+	public double getupper(String key) { 
+		return upper.get(key);
 	}
 	
-	public int getlower(String key) { 
-		return -100 ;
-		//return lower.get(key) ; 
+	public double getlower(String key) { 
+		return lower.get(key);
 	}
 /* Some sample code to test this class in main
  * SymTable ST = new SymTable();

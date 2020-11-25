@@ -58,7 +58,7 @@ public static void print() {
 	if ((operand.contentEquals(existing.get(j)))
 			&& (isoperand.get(j)==0))
 	{ 
-		return (poexisting.get(i)-poexisting.get(j)) ;
+		return (-poexisting.get(i)+poexisting.get(j)) ;
 	}}
 		}
 		
