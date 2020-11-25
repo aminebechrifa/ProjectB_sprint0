@@ -56,7 +56,7 @@ public class main {
 				+ "16 br.i5 Loop\n"
 				+ "17 Done\n"
 				+ "18 halt\n") ;
-			String[]	arg={ "-l","tnt"} ;
+			String[]	arg={"-l","-v", "tnt"} ;
 
 
 					// TODO Auto-generated method stub
@@ -105,8 +105,9 @@ public class main {
 					int lines=0 ;
 					if (Help.help)
 						Help.helping();
-
-					if (listing.lst) {
+					if(Verbose.verbose)
+					Label.labeltable();
+				
 
 						if (!ErrorReporter.errors) {
 							lstoutput.writeFileTop();
@@ -131,7 +132,7 @@ public class main {
 
 						lines=0; 
 						addr=0 ;
-								
+						if (listing.lst) {		
 						for (LineStmt val : b) {
 					
 						
@@ -147,11 +148,8 @@ public class main {
 								lstoutput.writeFile(Integer.toString(lines),null,
 										lstoutput.gethex2b( val.getoffset()), val.getlabel() , " ", val.getmnemonic(), val.getoperand(), val.getcomment());}
 								lines++ ;
-						}
-					} else {
-						System.out.print(e.getErrors());
-						lstoutput.write(e.getErrors());
-					}
+						}}
+					
 
 			}
 

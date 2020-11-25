@@ -66,6 +66,18 @@ public static void print() {
 	return 0 ;
 		
 	}
+	public static void labeltable() { 
+		System.out.println("          Label Table        ") ;
+		System.out.println(	String.format("%-10s %-4s    %-4s ","label" ,"Line" ,"operand/label")) ;
+		for (int i=0 ; i< poexisting.size()  ; i++ ) { 
+			String str="" ;
+			if (isoperand.get(i)==1) { 
+				str=" operand" ; 
+			}else str=" label  " ;
+	
+			System.out.println(	String.format("%-10s %-4s   %-4s ",existing.get(i),poexisting.get(i),str )) ;
+		}
+	}
 
 
 
