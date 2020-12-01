@@ -83,15 +83,24 @@ e=er ;
 	}
 
 	private String scanString() {
-		String str = "";
-		while (ch != (int)'"') {
+		String str = "\"";
+	
+		read() ;
 		
+		while ( ch != (int)'\"' ) {
+	
 			// if EOF without having the " WEE GOT PROBLEM
 			str = str +(char) ch;
+			
 			read();
+			if (ch==(int)'\n') { 
+				error("String without end point ") ;
+				return getToken() ;} 
 		}
+		
 		colPos++ ;
-		return str;
+		read() ;
+		return str+'\"' ;
 	}
 	
 	
@@ -110,7 +119,7 @@ e=er ;
 	}
 
 	private void error(String t) {
-		e.record( 	"token expected  but fou	nd "+t, getPosition() );
+		e.record( 	"token expected  but found "+t, getPosition() );
 	}
 public Position getPosition() { 
 	return new Position(curlinePos,curcolPos) ;

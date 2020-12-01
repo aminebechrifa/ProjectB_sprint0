@@ -46,6 +46,8 @@ public String tostring() {
 	return mnemonic+ ' '+range +' '+ operand ;
 }
 
-
+String getoperandtype() { 
+	return null ;
+}
 
 }

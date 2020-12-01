@@ -4,6 +4,7 @@ import java.util.Map;
 public class SymTable {
 	Map<String, String> inherent = new HashMap<String,String>();
 	Map<String, String> immediate = new HashMap<String,String>();
+	Map<String, String> relative  = new HashMap<String,String>();
 	Map<String, String> BinTable = new HashMap<String,String>();
 	Map<String, String> HexTable = new HashMap<String,String>();
 	
@@ -38,44 +39,33 @@ public class SymTable {
 		inherent.put("tgt","mnemonic");
 		inherent.put("tle","mnemonic");
 		inherent.put("tge","mnemonic");
-		inherent.put("halt","mnemonic");
+		inherent.put("tge","mnemonic");
+		inherent.put("trap","mnemonic");
 		
 		//all key token immediate 
-		immediate.put("add","mnemonic");
-		immediate.put("addv","mnemonic");
-		immediate.put("and","mnemonic");
-		immediate.put("br","mnemonic");
-		immediate.put("brf","mnemonic");
-		immediate.put("call","mnemonic");
-		immediate.put("dec","mnemonic");
-		immediate.put("decv","mnemonic");
-		immediate.put("div","mnemonic");
-		immediate.put("dup","mnemonic");
-		immediate.put("enter","mnemonic");
-		immediate.put("halt","mnemonic");
-		immediate.put("inc","mnemonic");
-		immediate.put("incv","mnemonic");
-		immediate.put("ldc","mnemonic");
-		immediate.put("ldv","mnemonic");
-		immediate.put("mul","mnemonic");
-		immediate.put("neg","mnemonic");
-		immediate.put("not","mnemonic");
-		immediate.put("or","mnemonic");
-		immediate.put("pop","mnemonic");
-		immediate.put("rem","mnemonic");
-		immediate.put("ret","mnemonic");
-		immediate.put("shl","mnemonic");
-		immediate.put("shr","mnemonic");
-		immediate.put("sub","mnemonic");
-		immediate.put("stv","mnemonic");
-		immediate.put("teq","mnemonic");
-		immediate.put("tge","mnemonic");
-		immediate.put("tgt","mnemonic");
-		immediate.put("tlr","mnemonic");
-		immediate.put("tlt","mnemonic");
-		immediate.put("tne","mnemonic");
-		immediate.put("trap","mnemonic");
-		immediate.put("xor","mnemonic");
+		immediate.put("br.i5","label");
+		immediate.put("brf.i5","label");
+		immediate.put("enter.u5","FctInfo");
+		immediate.put("ldc.i3","int");
+		immediate.put("addv.u3","int");
+		immediate.put("ldv.u3","int");
+		immediate.put("stv.u3","int");
+		
+		
+		relative.put( "addv.u8","int") ;
+		relative.put( "ldv.u8","int") ;
+		relative.put( "stv.u8","int") ;
+		relative.put( "inc.u8","int") ;
+		relative.put( "decv.u8","int") ;
+		relative.put( "ebter.u8","int") ;
+		relative.put( "lda.i16","int") ;
+		relative.put( "ldc.i8","int") ;
+		relative.put( "lda.i16","int") ;
+		relative.put( "ldc.i32","int") ;
+		relative.put( "br.i8","label") ;
+		relative.put( "br.i16","Label") ;
+		relative.put( "brf.i8","label") ;
+		relative.put( "call.i16","label") ;
 		
 	    //All key-Binary pairs
 		BinTable.put("halt","000 00000");
@@ -173,7 +163,9 @@ public class SymTable {
 	public String getToken(String key) {
 		if ( containsInherent( key))
 			return inherent.get(key) ;
-		else return immediate.get(key) ;
+		else if ( containsImmediate(key)) 
+				return immediate.get(key) ;
+		else return relative.get(key) ;
 		
 	}
 	public String getBin(String key) {
@@ -181,12 +173,17 @@ public class SymTable {
 		
 	}
 	public String getHex(String key) {
+
 		return HexTable.get(key);
 	}
 	
 	public boolean containsInherent(String key) {
 		
 		return inherent.containsKey(key);
+	}
+	public boolean containsRelative(String key) {
+		
+		return relative.containsKey(key);
 	}
 	public boolean containsImmediate(String key) {
 		return immediate.containsKey(key);

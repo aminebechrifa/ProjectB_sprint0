@@ -8,11 +8,12 @@ public BinaryConverter(LineStmt va) {
 
 
 public  String getmnemonicbin() { 
+	Instruction inst=null ;
 	if (val.inst!=null ) {
-	Instruction inst=val.inst ;
+	 inst=val.inst ;
 	if (table.containsInherent(inst.mnemonic)) { 
 		return table.getHex(inst.mnemonic) ;
-	}else if (table.containsImmediate(inst.mnemonic)) {
+	}else if (table.containsImmediate(inst.mnemonic+inst.range) || table.containsRelative(inst.mnemonic+inst.range) ) {
 		
 		int mnemval=Integer.parseInt(table.getHex(inst.mnemonic),16); 
 	
@@ -21,7 +22,7 @@ public  String getmnemonicbin() {
 		 str=("00"+Integer.toHexString((int) (mnemval-table.getlower(inst.range) +Integer.parseInt(inst.operand))).toUpperCase()) ;
 		else
 			str=("00"+Integer.toHexString(mnemval)).toUpperCase() ;
-		return    str.substring(str.length() - 2, str.length()); 
+		return    str.substring(str.length() - 2, str.length()) ; 
 	}}
 	 return null ;
 }
@@ -36,6 +37,10 @@ return str.substring(str.length() - 4, str.length()).toUpperCase(); }
 }
 
 
-
-
+public  String hextobin (String str ) { 
+	if (str!=null) { 
+int val=Integer.parseInt(str,16) ;
+ return Integer.toBinaryString(  val)  ;} 
+	return null ;
+}
 }

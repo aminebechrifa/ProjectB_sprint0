@@ -19,6 +19,7 @@ public class main {
 						+ " ldc.i3 0\n"
 						+ " dup\n"
 						+ " stv.u3 0 ; n = 0\n"
+						+ " .Cstring "+"\"Sdsasdf\" \n" 
 						+ " stv.u3 1 ; sum = 0\n"
 						+ "Loop ldv.u3 0 ; push n\n"
 						+ " ldc.i8 10 ; push 10\n"
@@ -27,8 +28,8 @@ public class main {
 						+ "Continue ldv.u3 1 ; push sum\n"
 						+ " ldv.u3 0 ; push n\n"
 						+ " add ; add n to sum\n"
-						+ " stv.u3 1 ; store sum\n"
 					
+						
 						+ " br.i5 Loop\n"
 						+ "Done\n"
 						+ " halt\n" ;
@@ -42,21 +43,23 @@ public class main {
 				+ "2\n"
 				+ "3 ldc.i3 0\n"
 				+ "4 dup\n"
-				+ "5 stv.u3 0 ; n = 0\n"
+				+ "5 stv.u3 label ; n = 0\n"
 				+ "6 stv.u3 1 ; sum = 0\n"
+				+ " .Cstring "+"\"Sdsasdf\" \n" 
 				+ "7 Loop ldv.u3 0 ; push n\n"
-				+ "8 ldc.i8 10 ; push 10\n"
+				+ "8 label ldc.i8 10 ; push 10\n"
 				+ "9 tlt ; if n < 10 then Continue\n"
 				+ "10 brf.i5 Done ; else Done\n"
 				+ "11 Continue ldv.u3 1 ; push sum\n"
 				+ "12 ldv.u3 0 ; push n\n"
 				+ "13 add ; add n to sum\n"
-				+ "14 stv.u3 1 ; store sum\n"
+				+ "14 sadstv.u3 1 ; store sum\n"
+				
 				+ "15 incv.u8 0 ; n++\n"
 				+ "16 br.i5 Loop\n"
 				+ "17 Done\n"
 				+ "18 halt\n") ;
-			String[]	arg={"-l","-v", "tnt"} ;
+			String[]	arg={"-l", "tnt"} ;
 
 
 					// TODO Auto-generated method stub
@@ -105,10 +108,15 @@ public class main {
 					int lines=0 ;
 					if (Help.help)
 						Help.helping();
+					System.out.println();
+					System.out.println();
+					System.out.println();
 					if(Verbose.verbose)
 					Label.labeltable();
 				
-
+					System.out.println();
+					System.out.println();
+					System.out.println();
 						if (!ErrorReporter.errors) {
 							lstoutput.writeFileTop();
 							exeoutput.writeFileTop2();
@@ -116,7 +124,7 @@ public class main {
 								if (val.biwritable()) {
 								BinaryConverter BC=new BinaryConverter( val) ;
 							// write in file also 
-								lstoutput.writebinconsole(lstoutput.getADDR(addr),BC.getmnemonicbin() ,BC.getoffsetbin() ) ;
+								lstoutput.writebinconsole(BC.hextobin(lstoutput.getADDR(addr)),BC.hextobin(BC.getmnemonicbin()) ,BC.hextobin(BC.getoffsetbin() )) ;
 								addr++ ;
 								}
 								
@@ -128,17 +136,20 @@ public class main {
 							System.out.print(e.getErrors());
 							lstoutput.write(e.getErrors());
 						}
-
+						System.out.println();
+						System.out.println();
 
 						lines=0; 
 						addr=0 ;
+						
 						if (listing.lst) {		
 						for (LineStmt val : b) {
 					
-						
+							if (!ErrorReporter.errors) {
 							if (val.biwritable()) {
-							lstoutput.writeconsole(Integer.toString(lines), lstoutput.getADDR(addr),
-								lstoutput.gethex2b( val.getoffset()), val.getlabel() , " ", val.getmnemonic(), val.getoperand(), val.getcomment());
+							lstoutput.writeconsole(Integer.toString(lines), lstoutput.getADDR(addr),lstoutput.gethex2b( val.getoffset()), 
+														val.getlabel() , " ", val.getmnemonic(), val.getoperand(), val.getcomment());
+							
 							lstoutput.writeFile(Integer.toString(lines), lstoutput.getADDR(addr),
 									lstoutput.gethex2b( val.getoffset()), val.getlabel() , " ", val.getmnemonic(), val.getoperand(), val.getcomment());
 							addr++ ;}
@@ -148,7 +159,7 @@ public class main {
 								lstoutput.writeFile(Integer.toString(lines),null,
 										lstoutput.gethex2b( val.getoffset()), val.getlabel() , " ", val.getmnemonic(), val.getoperand(), val.getcomment());}
 								lines++ ;
-						}}
+						}}}
 					
 
 			}

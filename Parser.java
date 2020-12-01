@@ -86,17 +86,27 @@ public class Parser implements IParser  {
     	String operand=token ;
 
     		
-    	if  (!table.containsImmediate(mnemonic)) 
-    		{ expect("Immediate instructions"  , mnemonic  )  ;
+    	if  (!table.containsImmediate(mnemonic+range)) 
+    		{ expect("Immediate instructions"  , mnemonic +range )  ;
     		SkipLine() ;
     		return null ; 
     		}
     	ImediateInstruction I=new ImediateInstruction(mnemonic,range , operand) ;
     	if  (I.operandissue()) 
-		{ expect("operand ", token  ) ;
+		{ expect("operand  " , token  ) ;
     		SkipLine() ;
 		return null ; 
 		}	
+      	if  ( !Character.isDigit(operand.charAt(0)) &&  (table.getToken(mnemonic+range).contentEquals("int")) ) 
+    		{ expect("operand of type Number but found  " , token  ) ;
+        		SkipLine() ;
+    		return null ; 
+    		}	
+      	else if  ( Character.isDigit(operand.charAt(0)) && (table.getToken(mnemonic+range).contentEquals("label")) ) 
+    		{ expect("operand of type label but found  " , token  ) ;
+        		SkipLine() ;
+    		return null ; 
+    		}
     	if  (I.rangeIssue( table.getlower(range),  table.getupper(range),address)) 
     		
 		{  String err="operand in reange  ["+ table.getlower(range)+ " , "+ table.getupper(range)+" ]  ";
@@ -114,8 +124,77 @@ public class Parser implements IParser  {
 
         // your code...
     }
+
+    private Instruction parseRelative() {
+       	String mnemonic=token.substring(0,token.indexOf('.')) ; 
+    	String range=token.substring(token.indexOf('.'),token.length()) ;
+    	nextToken() ;
+    	String operand=token ;
+
+    		
+    	if  (!table.containsRelative(mnemonic+range)) 
+    		{ expect("relative instructions"  , mnemonic+range  )  ;
+    		SkipLine() ;
+    		return null ; 
+    		}
+    	RelativeInstriction I=new RelativeInstriction(mnemonic,range , operand) ;
+    	if  (I.operandissue()) 
+		{ expect("operand  of type "  , token  ) ;
+    		SkipLine() ;
+		return null ; 
+		}	
+       	if  ( !Character.isDigit(operand.charAt(0))  &&  (table.getToken(mnemonic+range).contentEquals("int")) ) 
+		{ expect("operand of type integer but found  " , token  ) ;
+    		SkipLine() ;
+		return null ; 
+		}	
+       	else if  ( Character.isDigit(operand.charAt(0))  &&  (table.getToken(mnemonic+range).contentEquals("label")) ) 
+		{ expect("operand of type label but found  " , token  ) ;
+    		SkipLine() ;
+		return null ; 
+		}
+    	if  (I.rangeIssue( table.getlower(range),  table.getupper(range),address)) 
+    		
+		{  String err="operand in reange  ["+ table.getlower(range)+ " , "+ table.getupper(range)+" ]  ";
+    		expect(err, token  ) ;
+    		SkipLine() ;
+		return null ; 
+		}	
+    		
+    		
+    	nextToken() ;	
+    		
+    	return  I ;
+    	
+    	
+    }
+    private Instruction parsedirective() {
+    	String mnemonic=token ; 
+    	nextToken() ;
+    	String operand=token ;
+
+    		
+    	if  (!mnemonic.contentEquals(".Cstring")) 
+    		{ expect("Directive  "  , mnemonic  )  ;
+    		SkipLine() ;
+    		return null ; 
+    		}
+    	if ( !(  (operand.charAt(0)=='"') && ( operand.charAt(operand.length()-1) =='"' )) ) { 
+    		expect(" String as operand for Directive .Cstring  "  , mnemonic  )  ;
+    		SkipLine() ;
+    		return null ; 
+    	
+    	}
+    	nextToken() ;
+
+    	return new directive(mnemonic , operand) ;
+
+		}	
+    		
+    		
+
     private Label parselabel() {
-    	if  (!table.containsInherent(token) &&   !false/*(table.containsImmediate(token))*/ ) { 
+    	if  (!table.containsInherent(token) &&   !(table.containsImmediate(token)) ) { 
     	String label=token ; 
 
     	nextToken() ;
@@ -127,14 +206,7 @@ public class Parser implements IParser  {
         // your code...
     }
     //---------------------------------------------------------------------------------
-    private Instruction parseRelative() {
-		return null;
-        // your code...
-    }
-    private Instruction parsedirective() {
-		return null;
-        // your code...
-    }
+
     // -------------------------------------------------------------------
     // A line statement:
     //   - could be empty (only a EOL);
@@ -164,9 +236,13 @@ if (Verbose.verbose)
 	}
 		
 	else if ( !(lexer.getPosition().colpos==0)&& !(token.contains(".")) ) {
+		
 		inst=parseInherent() ; 
 	}
 	else if ( (token.contains(".") )&& !(lexer.getPosition().colpos==0) ) {
+		if (table.containsRelative(token))
+			inst=parseRelative() ;
+		else 
 		inst=parseImmediate() ;
 	}
 	else { unexpected( token  ) ;SkipLine() ; }
