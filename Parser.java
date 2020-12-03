@@ -97,8 +97,9 @@ public class Parser implements IParser  {
     		SkipLine() ;
 		return null ; 
 		}	
-      	if  ( !Character.isDigit(operand.charAt(0)) &&  (table.getToken(mnemonic+range).contentEquals("int")) ) 
-    		{ expect("operand of type Number but found  " , token  ) ;
+      	if   ( !Character.isDigit(operand.charAt(0))  &&  (table.getToken(mnemonic+range).contentEquals("int")) )
+      			if ( !Character.isDigit(operand.charAt(1))  && (operand.charAt(0)=='-') &&  (table.getToken(mnemonic+range).contentEquals("int")) ) 
+    		{ expect("operand of type Number  " , token  ) ;
         		SkipLine() ;
     		return null ; 
     		}	
@@ -143,7 +144,8 @@ public class Parser implements IParser  {
     		SkipLine() ;
 		return null ; 
 		}	
-       	if  ( !Character.isDigit(operand.charAt(0))  &&  (table.getToken(mnemonic+range).contentEquals("int")) ) 
+       	if  ( !Character.isDigit(operand.charAt(0))  &&  (table.getToken(mnemonic+range).contentEquals("int")) )
+			if ( !Character.isDigit(operand.charAt(1))  && (operand.charAt(0)=='-') &&  (table.getToken(mnemonic+range).contentEquals("int")) ) 
 		{ expect("operand of type integer but found  " , token  ) ;
     		SkipLine() ;
 		return null ; 
@@ -168,7 +170,7 @@ public class Parser implements IParser  {
     	
     	
     }
-    private Instruction parsedirective() {
+    private Instruction parsedirective(Label label) {
     	String mnemonic=token ; 
     	nextToken() ;
     	String operand=token ;
@@ -185,6 +187,13 @@ public class Parser implements IParser  {
     		return null ; 
     	
     	}
+    	if (label.label == null) { 
+    		expect(" a label for the directive  "  , mnemonic  )  ;
+    		SkipLine() ;
+    		return null ; 
+    	
+    	}
+    	
     	nextToken() ;
 
     	return new directive(mnemonic , operand) ;
@@ -232,7 +241,7 @@ if (Verbose.verbose)
 	}
 	
 	else if ( (token.charAt(0)=='.')&& !(lexer.getPosition().colpos==0)) {
-		inst=parsedirective() ; 
+		inst=parsedirective( label) ; 
 	}
 		
 	else if ( !(lexer.getPosition().colpos==0)&& !(token.contains(".")) ) {
@@ -249,6 +258,7 @@ if (Verbose.verbose)
 		
 	
 		}
+
 
 if (label==null)
 	label = new Label() ;

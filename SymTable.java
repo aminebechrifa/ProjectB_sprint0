@@ -14,11 +14,19 @@ public class SymTable {
 
 	public SymTable() {
 		//All key-token pairs
+		inherent.put("INHERENT_BEGIN","mnemonic");
 		inherent.put("halt","mnemonic");
 		inherent.put("pop","mnemonic");
 		inherent.put("dup","mnemonic");
 		inherent.put("exit","mnemonic");
 		inherent.put("ret","mnemonic");
+		inherent.put("RFU1","mnemonic");
+		inherent.put("RFU2","mnemonic");
+		inherent.put("RFU3","mnemonic");
+		inherent.put("RFU4","mnemonic");
+		inherent.put("RFU5","mnemonic");
+		inherent.put("RFU6","mnemonic");
+		inherent.put("RFU7","mnemonic");
 		inherent.put("not","mnemonic");
 		inherent.put("and","mnemonic");
 		inherent.put("or","mnemonic");
@@ -39,10 +47,11 @@ public class SymTable {
 		inherent.put("tgt","mnemonic");
 		inherent.put("tle","mnemonic");
 		inherent.put("tge","mnemonic");
-		inherent.put("tge","mnemonic");
-		inherent.put("trap","mnemonic");
+		inherent.put("INHERENT_END","mnemonic");
 		
+	
 		//all key token immediate 
+		immediate.put("IMMEDIATE_BEGIN","label"); //doesnt say if label ? guessing its a label though
 		immediate.put("br.i5","label");
 		immediate.put("brf.i5","label");
 		immediate.put("enter.u5","FctInfo");
@@ -50,8 +59,10 @@ public class SymTable {
 		immediate.put("addv.u3","int");
 		immediate.put("ldv.u3","int");
 		immediate.put("stv.u3","int");
+		immediate.put("IMMEDIATE_END","label"); //doesnt say if label ? guessing its a label though
 		
-		
+		//all key-token relative
+		relative.put( "RELATIVE_BEGIN","label") ;
 		relative.put( "addv.u8","int") ;
 		relative.put( "ldv.u8","int") ;
 		relative.put( "stv.u8","int") ;
@@ -63,9 +74,12 @@ public class SymTable {
 		relative.put( "lda.i16","int") ;
 		relative.put( "ldc.i32","int") ;
 		relative.put( "br.i8","label") ;
-		relative.put( "br.i16","Label") ;
+		relative.put( "br.i16","label") ;
 		relative.put( "brf.i8","label") ;
-		relative.put( "call.i16","label") ;
+		relative.put( "calls.i16","label") ; //change call to calls?
+		relative.put( "trap","int") ;
+		relative.put( "LAST","int") ; //not sure if int or label 
+		relative.put( "RELATIVE_END","label") ;
 		
 	    //All key-Binary pairs
 		BinTable.put("halt","000 00000");
@@ -95,11 +109,20 @@ public class SymTable {
 		BinTable.put("tge","000 11111");
 	
 		//All key-hex pairs
+		//inherent starts here
+		HexTable.put("INHERENT_BEGIN","00");
 		HexTable.put("halt","00");
 		HexTable.put("pop","01");
 		HexTable.put("dup","02");
 		HexTable.put("exit","03");
 		HexTable.put("ret","04");
+		HexTable.put("RFU1","05");
+		HexTable.put("RFU2","06");
+		HexTable.put("RFU3","07");
+		HexTable.put("RFU4","08");
+		HexTable.put("RFU5","09");
+		HexTable.put("RFU6","0A");
+		HexTable.put("RFU7","0B");
 		HexTable.put("not","0C");
 		HexTable.put("and","0D");
 		HexTable.put("or","0E");
@@ -120,6 +143,9 @@ public class SymTable {
 		HexTable.put("tgt","1D");
 		HexTable.put("tle","1E");
 		HexTable.put("tge","1F");
+		HexTable.put("INHERENT_END","1F");
+		//immediate starts here
+		HexTable.put("IMMEDIATE_BEGIN","30");
 		HexTable.put("br","30");
 		HexTable.put("brf","50");
 		HexTable.put("enter","70");
@@ -127,6 +153,15 @@ public class SymTable {
 		HexTable.put("addv","98");
 		HexTable.put("ldv","A0");
 		HexTable.put("stv","A8");
+		HexTable.put("IMMEDIATE_END","AF");
+		//Relative Starts here
+		HexTable.put("RELATIVE_BEGIN","B0");
+		HexTable.put("lda","D5");
+		HexTable.put("call","E7");
+		HexTable.put("trap","FF");
+		HexTable.put("RELATIVE_END","FF");
+		HexTable.put("LAST","FF");
+		
 
 		//all lower bounds of fields
 		lower.put(".u3",0.0);

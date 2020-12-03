@@ -81,6 +81,7 @@ public String convstringhex() {
 	
 	numb=numb.substring(numb.length() - 2, numb.length()).toUpperCase();
 	str=str+numb ;}
+	
 	return str ;
 	
 }
