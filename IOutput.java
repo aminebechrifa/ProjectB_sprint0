@@ -1,34 +1,75 @@
 public interface IOutput extends IFile {
 
-        public void writeFile(String line, String addr, String machine, String code, String label, String asm,
-                        String code2, String comments);
+        // For Listing
+        public void writeFile(String line, String addr, String machine, String offset, String label, String mnemonic,
+                        String operand, String comments);
 
+        public void writeconsole(String line, String addr, String machine, String offset, String label, String mnemonic,
+                        String operand, String comments);
+
+        // write .lst header
         public void writeFileTop();
 
-        public void writeFile(String offset, String address, String label, String mnemonic, String operand,
-                        String comment);
-
-        public void writeFile2(String address, String offset, String label, String mnemonic, String operand,
-                        String comment);
-
-        public void writeFileTop2();
-
-        public void writeFile3(String address, String label, String mnemonic, String operand, String comment);
-
-        public void writeFileTop3();
-
-        public void writeFiles1(String line, String str, String addr, String asm);
-
-        public void writeBinaryFileTop();
-
-        public void writeBinaryFile(String addr, String code);
-
+        // basic write method
         public void write(String str);
 
-        public String getADDR(int i);
-        public void writeconsole(String line, String addr, String machine,String offset,String label, String mnemonic, String operand ,
-                String comments) ;
-        public String gethex2b(String ss) ; 
-       public void writebinconsole(String addr, String machine,String offset ) ;
+        // .exe instructions
+        
+        public void   writeExecutable(String code);
+        public void   writeConsoleExecutable(String code);
 
+        // get address
+        public String getADDR(int i);
+
+        // convert to hex
+        public String gethex2b(String ss);
+
+        public String getFilename();
+
+        public String getExtension();
+
+        public String getSourcefilename();
+
+        // setOperands
+        public void setFilename(String fn);
+
+        public void setExtension(String ext);
+
+        // provides the full file name, eg: program.exe, and it will set
+        public void setFullfilename(String sourcefile);
+
+        // printOperands
+        public void printFilename();
+
+        public void printExtension();
+
+        public void printSourcefilename();
+    
+        public String getexecutableline(String addr, String machine,String offset) ;
+      
+
+public void writeFile(String offset, String address, String label, String mnemonic, String operand,
+                String comment);
+
+public void writeFile2(String address, String offset, String label, String mnemonic, String operand,
+                String comment);
+
+public void writeFileTop2();
+
+public void writeFile3(String address, String label, String mnemonic, String operand, String comment);
+
+public void writeFileTop3();
+
+public void writeFiles1(String line, String str, String addr, String asm);
+
+public void writeBinaryFileTop();
+
+public void writeBinaryFile(String addr, String code);
+
+
+
+
+
+	
+	public void writebinconsole(String addr, String machine,String offset ) ;
 }

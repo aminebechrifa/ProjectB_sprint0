@@ -18,55 +18,127 @@ public class Output implements IOutput {
     }
 
     // For Listing
-    // if line is not combined
-    
-    public void writeFile(String line, String addr, String machine,String offset,String label, String mnemonic, String operand ,
-            String comments) {
+    public void writeFile(String line, String addr, String machine, String offset, String label, String mnemonic,
+            String operand, String comments) {
         if (label == null)
             label = "";
         if (addr == null)
-        	addr = "";
+            addr = "";
         if (machine == null)
-        	machine = "";
+            machine = "";
         if (offset == null)
-        	offset = "";
+            offset = "";
         if (mnemonic == null)
-        	mnemonic = "";
+            mnemonic = "";
         if (operand == null)
-        	operand = "";
+            operand = "";
         if (comments == null)
-        	comments = "";
+            comments = "";
 
-        write(String.format("%-4s %-4s %-4s %-7s %-5s %-13s %-8s %-11s %n", line, addr,machine , offset, label, mnemonic,
-                operand, comments));
+        write(String.format("%-4s %-4s %-13s %-7s %-5s %-13s %-10s %-8s %n", line, addr, machine, offset, label,
+                mnemonic, operand, comments));
     }
 
-    // write header
-
-
-
-    
-    
-    public void writeconsole(String line, String addr, String machine,String offset,String label, String mnemonic, String operand ,
-            String comments) {
+    public void writeconsole(String line, String addr, String machine, String offset, String label, String mnemonic,
+            String operand, String comments) {
         if (label == null)
             label = "";
         if (addr == null)
-        	addr = "";
+            addr = "";
         if (machine == null)
-        	machine = "";
+            machine = "";
         if (offset == null)
-        	offset = "";
+            offset = "";
         if (mnemonic == null)
-        	mnemonic = "";
+            mnemonic = "";
         if (operand == null)
-        	operand = "";
+            operand = "";
         if (comments == null)
-        	comments = "";
+            comments = "";
 
-        System.out.print(String.format("%-4s %-4s %-4s %-7s %-5s %-13s %-8s %-11s %n", line, addr,machine , offset, label, mnemonic,
-                operand, comments));
+        System.out.print(String.format("%-4s %-4s %-13s %-7s %-5s %-13s %-10s %-8s %n", line, addr, machine, offset,
+                label, mnemonic, operand, comments));
+        
     }
+    public String getexecutableline(String addr, String machine,String offset) {  
+    	if (addr == null)
+    	addr = "";
+    if (machine == null)
+    	machine = "";
+    if (offset == null)
+    	offset = "";
+
+
+ return ( addr+ machine+ offset);
+    	
+    }
+
+    // write .lst header
+    public void writeFileTop() {
+
+        write(String.format("%-4s %-4s %-7s %-5s %-13s %-8s %-15s %s %n%n", "Line", "Addr", "Machine", "Code", "Label",
+                "Assembly", "Code", "Comments"));
+
+    }
+
+    // basic write method
+    public void write(String str) {
+
+        String fn = this.filename;
+        String ext = this.extension;
+
+        try {
+            // adds a comma to ext if needed
+            if (ext == "")
+                ext = "";
+            else if (ext.charAt(0) != '.')
+                ext = "." + ext;
+            // Write to file and adds a \n, does not override with FileWriter(...,true);
+            // adds a comma to ext if needed
+            FileWriter fileWriter = new FileWriter(fn + ext, true);
+            fileWriter.write(str);
+            fileWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // write to .exe with machine code (hex) as input
+    public void writeExecutable(String code){
+
+    	StringBuilder s = new StringBuilder("");
+            
+            for (int i = 0; i < code.length(); i += 2) {
+                String str = code.substring(i, i + 2);
+                s.append((char) Integer.parseInt(str, 16));
+            }
+            
+        write(s.toString()+'\n');
+    }
+
+    // write to console as in .exe with machine code (hex) as input
+    public void writeConsoleExecutable(String code){
+         
+     	   ;
+    	StringBuilder s = new StringBuilder("");
+            
+            for (int i = 0; i < code.length(); i += 2) {
+                String str = code.substring(i, i + 2);
+             
+                s.append((char) Integer.parseInt(str, 16));
+            }
+            
+        System.out.print(s.toString()+'\n');
+    }
+    
+
+
+
+
+    
+    
+
     
     public void writebinconsole(String addr, String machine,String offset ) {
 
@@ -82,14 +154,7 @@ public class Output implements IOutput {
     }
   
 
-    // write header
-    public void writeFileTop() {
-
-        write(String.format("%-4s %-4s %-7s %-5s %-13s %-8s %-11s %-30s %n%n", "Line", "Addr", "Machine", "Code",
-                "Label", "Assembly", "Code", "Comments"));
-
-    }
-
+  
     // For Sprint 2
     public void writeFile(String offset, String address, String label, String mnemonic, String operand,
             String comment) {
@@ -168,28 +233,8 @@ public class Output implements IOutput {
         write(String.format("%-6s %s %n", addr, code));
     }
 
-    // write method
-    public void write(String str) {
+  
 
-        String fn = this.filename;
-        String ext = this.extension;
-
-        try {
-            // adds a comma to ext if needed
-            if (ext == "")
-                ext = "";
-            else if (ext.charAt(0) != '.')
-                ext = "." + ext;
-            // Write to file and adds a \n, does not override with FileWriter(...,true);
-            // adds a comma to ext if needed
-            FileWriter fileWriter = new FileWriter(fn + ext, true);
-            fileWriter.write(str);
-            fileWriter.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public String getADDR(int i) {
         String str = "0000000" + Integer.toHexString(i).toUpperCase();
@@ -201,6 +246,10 @@ public class Output implements IOutput {
         return str.substring(str.length() - 2, str.length());
     }
 
+  
+    
+    
+    
     // basic get/set/print
     public String getFilename() {
         return filename;
@@ -214,7 +263,6 @@ public class Output implements IOutput {
         return filename + extension;
     }
 
-    // setOperands
     public void setFilename(String fn) {
         this.filename = fn;
     }
@@ -233,7 +281,6 @@ public class Output implements IOutput {
             this.extension = ext;
     }
 
-    // most complicated of this class
     // provides the full file name, eg: program.exe, and it will set
     public void setFullfilename(String sourcefile) {
 
@@ -263,7 +310,6 @@ public class Output implements IOutput {
         }
     }
 
-    // printOperands
     public void printFilename() {
         System.out.print(filename);
     }
@@ -273,7 +319,9 @@ public class Output implements IOutput {
     }
 
     public void printSourcefilename() {
+
         System.out.print(filename + extension);
     }
-
+    
+    
 }

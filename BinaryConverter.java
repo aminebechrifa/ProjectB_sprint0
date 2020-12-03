@@ -36,7 +36,54 @@ return str.substring(str.length() - 4, str.length()).toUpperCase(); }
 	return null ;
 }
 
+public  String getoperand () {
+	
+	if (!(val.inst.operand==null) && ((val.inst.operand.charAt(0) =='\"'))) { 
+		return convstring() ;
+		}
+		
+	
+	if (!val.getoffset().contentEquals("0")) { 
+			return hextobin(getoffsetbin ()) ;
+		}
+	return null ;
+}
 
+
+public  String getoperandhex () {
+	
+	if (!(val.inst.operand==null) && ((val.inst.operand.charAt(0) =='\"'))) { 
+		return convstringhex() ;
+		}
+		
+	
+	if (!val.getoffset().contentEquals("0")) { 
+			return getoffsetbin () ;
+		}
+	return null ;
+}
+
+
+public String convstring() {
+	String str="" ; 
+	for (int i=1 ; i<val.inst.operand.length()-1 ; i++ ) { 
+	String numb=	"000000"+Integer.toBinaryString( (int)val.inst.operand.charAt(0)) ;
+	numb=numb.substring(numb.length() - 8, numb.length()).toUpperCase();
+	str=str+numb ;}
+	return str ;
+	
+}
+
+public String convstringhex() {
+	String str="" ; 
+	for (int i=1 ; i<val.inst.operand.length()-1 ; i++ ) { 
+	String numb=	"0"+Integer.toHexString( (int)val.inst.operand.charAt(i)) ;
+	
+	numb=numb.substring(numb.length() - 2, numb.length()).toUpperCase();
+	str=str+numb ;}
+	return str ;
+	
+}
 public  String hextobin (String str ) { 
 	if (str!=null) { 
 int val=Integer.parseInt(str,16) ;

@@ -119,12 +119,14 @@ public class main {
 					System.out.println();
 						if (!ErrorReporter.errors) {
 							lstoutput.writeFileTop();
-							exeoutput.writeFileTop2();
+							
 							for (LineStmt val : b) {
 								if (val.biwritable()) {
 								BinaryConverter BC=new BinaryConverter( val) ;
 							// write in file also 
-								lstoutput.writebinconsole(BC.hextobin(lstoutput.getADDR(addr)),BC.hextobin(BC.getmnemonicbin()) ,BC.hextobin(BC.getoffsetbin() )) ;
+							lstoutput.writeConsoleExecutable(lstoutput.getexecutableline(lstoutput.getADDR(addr), BC.getmnemonicbin(), BC.getoperandhex())) ;
+							lstoutput.writeExecutable(lstoutput.getexecutableline(lstoutput.getADDR(addr), BC.getmnemonicbin(), BC.getoperandhex())) ;
+						lstoutput.writebinconsole(BC.hextobin(lstoutput.getADDR(addr)),BC.hextobin(BC.getmnemonicbin()) ,BC.getoperand() ) ;	
 								addr++ ;
 								}
 								
@@ -141,8 +143,10 @@ public class main {
 
 						lines=0; 
 						addr=0 ;
-						
-						if (listing.lst) {		
+				
+						if (listing.lst) {	
+							lstoutput.writeconsole("lines", "address" ,"offset", 
+									"label ", " ","mnemonic" ,"operand", "comment") ;
 						for (LineStmt val : b) {
 					
 							if (!ErrorReporter.errors) {
