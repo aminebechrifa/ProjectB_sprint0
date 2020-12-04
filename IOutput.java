@@ -17,7 +17,7 @@ public interface IOutput extends IFile {
         
         public void   writeExecutable(String code);
         public void   writeConsoleExecutable(String code);
-
+        public void writeConsolehexExecutable(String code) ;
         // get address
         public String getADDR(int i);
 

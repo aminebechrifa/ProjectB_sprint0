@@ -132,7 +132,19 @@ public class Output implements IOutput {
         System.out.print(s.toString()+'\n');
     }
     
-
+    public void writeConsolehexExecutable(String code){
+        
+  	   ;
+ 	StringBuilder s = new StringBuilder("");
+         
+         for (int i = 0; i < code.length(); i += 2) {
+             String str = code.substring(i, i + 2);
+          
+             s=s.append( Integer.parseInt(str, 16));
+         }
+         
+     System.out.print(s.toString()+'\n');
+ }
 
 
 

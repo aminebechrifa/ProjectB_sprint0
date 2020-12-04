@@ -90,76 +90,7 @@ public class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("   enter.u5  0        ; OK, number <u5> [0..31].           \n"
-				+ "             .Cstring \"A2\"                                                        \n "
-				+ "			 enter.u5  1        ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  2        ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  3        ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  4        ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  5        ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  6        ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  7        ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  8        ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  9        ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  10       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  11       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  12       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  13       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  14       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  15       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  16       ; OK, number <u5> [0..31].\n"
-				+ "          enter.u5  17       ; OK, number <u5> [0..31].\n"
-				+ "          enter.u5  18       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  19       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  20       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  21       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  22       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  23       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  24       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  25       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  26       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  27       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  28       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  29       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  30       ; OK, number <u5> [0..31].           \n"
-				+ "          enter.u5  31       ; OK, number <u5> [0..31].           \n"
-				+ "\n"
-				+ "            ldc.i3  0        ; OK, number <i3> [-4..3]. \n"
-				+ "            ldc.i3  1        ; OK, number <i3> [-4..3]. \n"
-				+ "            ldc.i3  2        ; OK, number <i3> [-4..3]. \n"
-				+ "            ldc.i3  3        ; OK, number <i3> [-4..3]. \n"
-				+ "            ldc.i3  -4       ; OK, number <i3> [-4..3]. \n"
-				+ "            ldc.i3  -3       ; OK, number <i3> [-4..3]. \n"
-				+ "            ldc.i3  -2       ; OK, number <i3> [-4..3]. \n"
-				+ "            ldc.i3  -1       ; OK, number <i3> [-4..3]. \n"
-				+ "\n"
-				+ "           addv.u3  0        ; OK, number <u3> [0..7].           \n"
-				+ "           addv.u3  1        ; OK, number <u3> [0..7].    \n"
-				+ "           addv.u3  2        ; OK, number <u3> [0..7].    \n"
-				+ "           addv.u3  3        ; OK, number <u3> [0..7].    \n"
-				+ "           addv.u3  4        ; OK, number <u3> [0..7].    \n"
-				+ "           addv.u3  5        ; OK, number <u3> [0..7].    \n"
-				+ "           addv.u3  6        ; OK, number <u3> [0..7].    \n"
-				+ "           addv.u3  7        ; OK, number <u3> [0..7].    \n"
-				+ "\n"
-				+ "            ldv.u3  0        ; OK, number <u3> [0..7].           \n"
-				+ "            ldv.u3  1        ; OK, number <u3> [0..7].    \n"
-				+ "            ldv.u3  2        ; OK, number <u3> [0..7].    \n"
-				+ "            ldv.u3  3        ; OK, number <u3> [0..7].    \n"
-				+ "            ldv.u3  4        ; OK, number <u3> [0..7].    \n"
-				+ "            ldv.u3  5        ; OK, number <u3> [0..7].    \n"
-				+ "            ldv.u3  6        ; OK, number <u3> [0..7].    \n"
-				+ "            ldv.u3  7        ; OK, number <u3> [0..7].    \n"
-				+ "\n"
-				+ "            stv.u3  0        ; OK, number <u3> [0..7].           \n"
-				+ "            stv.u3  1        ; OK, number <u3> [0..7].    \n"
-				+ "            stv.u3  2        ; OK, number <u3> [0..7].    \n"
-				+ "            stv.u3  3        ; OK, number <u3> [0..7].    \n"
-				+ "            stv.u3  4        ; OK, number <u3> [0..7].    \n"
-				+ "            stv.u3  5        ; OK, number <u3> [0..7].    \n"
-				+ "            stv.u3  6        ; OK, number <u3> [0..7].    \n"
-				+ "            stv.u3  7        ; OK, number <u3> [0..7].    \n"
-				+ "") ;
+		System.out.println(strr) ;
 			String[]	arg={"-l","-v", "tnt"} ;
 
 
@@ -226,7 +157,7 @@ public class main {
 								BinaryConverter BC=new BinaryConverter( val) ;
 							// write in file also 
 							lstoutput.writeConsoleExecutable(lstoutput.getexecutableline(lstoutput.getADDR(addr), BC.getmnemonicbin(), BC.getoperandhex())) ;
-							lstoutput.writeExecutable(lstoutput.getexecutableline(lstoutput.getADDR(addr), BC.getmnemonicbin(), BC.getoperandhex())) ;
+							lstoutput.writeConsolehexExecutable(lstoutput.getexecutableline(lstoutput.getADDR(addr), BC.getmnemonicbin(), BC.getoperandhex())) ;
 							exeoutput.writeExecutable(lstoutput.getexecutableline(lstoutput.getADDR(addr), BC.getmnemonicbin(), BC.getoperandhex())) ;
 
 						lstoutput.writebinconsole(BC.hextobin(lstoutput.getADDR(addr)),BC.hextobin(BC.getmnemonicbin()) ,BC.getoperand() ) ;	
